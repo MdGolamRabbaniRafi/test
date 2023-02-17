@@ -1,0 +1,140 @@
+create user Dumbledore identified by Phoenix
+
+
+CREATE TABLE House (
+  H_Id INTEGER PRIMARY KEY,
+  House_Name VARCHAR(50) NOT NULL,
+  House_Points INTEGER
+);
+
+
+CREATE TABLE Student (
+  S_Id INTEGER PRIMARY KEY,
+  Name VARCHAR(50),
+  CGPA DECIMAL(3, 2) CHECK (CGPA <= 4.00),
+  Blood_Status VARCHAR(50),
+  H_Id INTEGER REFERENCES House(H_Id)
+);
+
+INSERT INTO Student
+VALUES
+    (2, 'Harry', 3.45, 'Halfblood', 11)
+
+INSERT INTO Student
+VALUES
+    (7, 'Ron', 3.01, 'Pureblood', 11)
+
+INSERT INTO Student
+VALUES
+    (12, 'Hannah', NULL, 'Pureblood', 22)
+
+INSERT INTO Student
+VALUES
+    (17, 'Cedric', 3.78, 'Pureblood', 22)
+
+INSERT INTO Student
+VALUES
+    (22, 'Cho', 3.55, 'Muggleborn', 33)
+INSERT INTO Student
+VALUES
+    (27, 'Luna', 2.89, NULL, 33)
+
+INSERT INTO Student
+VALUES
+    (32, 'Draco', 3.88, 'Pureblood', 44)
+
+INSERT INTO Student
+VALUES
+    (37, 'Goyle', 3., 'Pureblood', 44)
+
+
+INSERT INTO House 
+VALUES
+    (11, 'Gryffindor', 892);
+INSERT INTO House 
+VALUES
+    (22, 'Hufflepuf', 785);
+INSERT INTO House 
+VALUES
+    (33, 'Ravenclaw', 789);
+INSERT INTO House 
+VALUES
+    (44, 'Slytherin', 850);
+
+select * from student
+select * from house
+
+Write a query to display the difference between the maximum and minimum CGPA.
+
+SELECT MAX(CGPA) - MIN(CGPA) AS CGPA_Difference
+FROM Student;
+
+
+
+Write a query to concatenate the student's name and blood status, separated by a Colon.
+
+SELECT Name || ':' || Blood_Status AS Name_BloodStatus
+FROM Student;
+
+Display the student's name with the column headers "Student Name"
+
+SELECT Name AS Student_name
+FROM Student;
+
+Write a query to select all students whose names End with the letter 'h'
+
+SELECT *
+FROM Student
+WHERE Name LIKE '%h';
+
+
+Write a query to select all students who do not have a blood status assigned 
+
+SELECT *
+FROM Student
+WHERE Blood_Status IS NULL;
+
+Write a query to display all students, ordered by their CGPA in ascending order.
+
+SELECT *
+FROM Student
+ORDER BY CGPA asc;
+
+Write a query to display the First 2 characters of the name of each student.
+
+SELECT SUBSTR(Name, 1, 2) AS First_Two_Chars
+FROM Student;
+
+Write a query to display the blood status of each student, and replace any null values with "Unknown".
+
+SELECT Name, NVL(Blood_Status, 'Unknown') AS Blood_Status
+FROM Student;
+
+Write a query to find the highest CGPA among all students.
+
+
+SELECT MAX(CGPA) AS Highest_CGPA
+FROM Student;
+
+
+Write a query to find the total CGPA of all students.
+
+SELECT SUM(CGPA) AS Total_CGPA
+FROM Student
+
+ What is the number of students in each house?
+
+SELECT H_id, COUNT(*) as num_students
+FROM Student
+GROUP BY H_id;
+
+What are the names and CGPA of students with a CGPA greater than 3.00?
+
+SELECT Name, CGPA
+FROM Student
+GROUP BY Name, CGPA
+HAVING CGPA > 3.00;
+
+
+
+
